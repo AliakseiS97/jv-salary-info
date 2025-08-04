@@ -14,26 +14,25 @@ public class SalaryInfo {
                 .append(System.lineSeparator());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate startMons = LocalDate.parse(dateFrom, formatter);
-        LocalDate endMonths = LocalDate.parse(dateTo, formatter);
+        LocalDate startDate = LocalDate.parse(dateFrom, formatter);
+        LocalDate endDate = LocalDate.parse(dateTo, formatter);
 
         for (String worker : names) {
             int salary = 0;
 
             for (String dataIndex : data) {
-                String dataStr = dataIndex.split(" ")[0];
-                String workerName = dataIndex.split(" ")[1];
-                String workHour = dataIndex.split(" ")[2];
-                String salaryPerHour = dataIndex.split(" ")[3];
+                String[] dataArray = dataIndex.split(" ");
+                String dataStr = dataArray[0];
+                String workerName = dataArray[1];
+                String workHour = dataArray[2];
+                String salaryPerHour = dataArray[3];
 
                 LocalDate workingDay = LocalDate.parse(dataStr, formatter);
 
                 if ((worker.equals(workerName))
-                        && (!workingDay.isBefore(startMons))
-                        && (!workingDay.isAfter(endMonths))) {
+                        && (!workingDay.isBefore(startDate))
+                        && (!workingDay.isAfter(endDate))) {
                     salary += Integer.parseInt(workHour) * Integer.parseInt(salaryPerHour);
-                } else {
-                    System.out.println("Check data!");
                 }
             }
             report.append(worker)
